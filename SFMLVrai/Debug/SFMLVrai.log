@@ -1,7 +1,1 @@
-﻿  Utilities.cpp
-D:\projVS\SFMLVrai\SFMLVrai\Utilities.cpp(12,7): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\projVS\SFMLVrai\SFMLVrai\Utilities.cpp(14,10): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\projVS\SFMLVrai\SFMLVrai\Utilities.cpp(16,7): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\projVS\SFMLVrai\SFMLVrai\Utilities.cpp(19,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\projVS\SFMLVrai\SFMLVrai\Utilities.cpp(19,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  SFMLVrai.vcxproj -> D:\projVS\SFMLVrai\Debug\SFMLVrai.exe
+﻿  SFMLVrai.vcxproj -> C:\Users\etien\OneDrive\Bureau\c++_moteur\Debug\SFMLVrai.exe
