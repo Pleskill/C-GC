@@ -1,29 +1,41 @@
 #include "Utilities.h"
 
-void Utilities::setShapeOrigine(sf::Shape* forme, float x, float y)
+void Utilities::setShapeOrigine(sf::Shape* shape, float x, float y)
 {
-	forme->setOrigin(forme->getLocalBounds().width * x, forme->getLocalBounds().height * y);
+	shape->setOrigin(shape->getLocalBounds().width * x, shape->getLocalBounds().height * y);
 }
 
-void Utilities::setObjectPosition(sf::Shape* forme, int x, int y)
+void Utilities::setObjectPosition(sf::Shape* shape, int x, int y)
 {
-	if (x > WIDTH)
+	if (x > WIDTH_W)
 	{
-		x = WIDTH;
+		x = WIDTH_W;
 	}
-	if (y = HEIGHT)
+	if (y = HEIGHT_W)
 	{
-		y = HEIGHT;
+		y = HEIGHT_W;
 	}
 
-	forme->setPosition(x, y);
+	shape->setPosition(x, y);
 }
 
-//bool Utilities::isColliding(sf::Shape* forme, sf::Vector2f* vitesse)
-//{
-//	sf::FloatRect shapeCollider = forme->getGlobalBounds();
-//
-//	if(shapeCollider.intersects())
-//
-//	return false;
-//}
+bool Utilities::isColliding(sf::Shape* shape)
+{
+	//On check si la hauteur de la balle dépasse un des bords de la fenêtre
+	if (shape->getOrigin().y + shape->getLocalBounds().height/2 > HEIGHT_W || shape->getOrigin().y - shape->getLocalBounds().height/2 < 0)
+	{
+		return true;
+	}
+	else
+		return false;
+
+	//On check si la largeur de la balle dépasse la fenêtre
+	if (shape->getOrigin().x + shape->getLocalBounds().width/2 > WIDTH_W || shape->getOrigin().x - shape->getLocalBounds().width/2 < 0)
+	{
+		return true;
+	}
+	else
+		return false;
+
+	return false;
+}
