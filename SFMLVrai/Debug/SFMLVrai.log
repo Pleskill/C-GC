@@ -1,0 +1,13 @@
+﻿  SFMLVrai.cpp
+D:\projVS\SFMLVrai\SFMLVrai\SFMLVrai.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\projVS\SFMLVrai\SFMLVrai\SFMLVrai.cpp(15,63): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+D:\projVS\SFMLVrai\SFMLVrai\SFMLVrai.cpp(15,42): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+  SFMLVrai.vcxproj -> D:\projVS\SFMLVrai\Debug\SFMLVrai.exe
