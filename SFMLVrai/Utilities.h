@@ -4,14 +4,15 @@
 
 class Utilities
 {
-	public :
-		float WIDTH_W = 1280;
-		float HEIGHT_W = 720;
+public:
+    float WIDTH_W = 1280;
+    float HEIGHT_W = 720;
 
-		void setShapeOrigine(sf::Shape* shape, float x, float y);
+    bool blocked = false;
 
-		void setObjectPosition(sf::Shape* shape, int x, int y);
+    void setShapeOrigine(sf::Shape* shape, float x, float y);
 
-		bool isColliding(sf::Shape* shape);
+    void setObjectPosition(sf::Shape* shape, sf::Vector2f);
+
+    int isColliding(sf::Shape* shape);
 };
-

@@ -1,41 +1,57 @@
 #include "Utilities.h"
 
+sf::Vector2f startPos(0,0);
+
 void Utilities::setShapeOrigine(sf::Shape* shape, float x, float y)
 {
-	shape->setOrigin(shape->getLocalBounds().width * x, shape->getLocalBounds().height * y);
+    shape->setOrigin(shape->getLocalBounds().width * x, shape->getLocalBounds().height * y);
 }
 
-void Utilities::setObjectPosition(sf::Shape* shape, int x, int y)
+void Utilities::setObjectPosition(sf::Shape* shape, sf::Vector2f pos)
 {
-	if (x > WIDTH_W)
-	{
-		x = WIDTH_W;
-	}
-	if (y = HEIGHT_W)
-	{
-		y = HEIGHT_W;
-	}
+    if (pos.x > WIDTH_W)
+    {
+        pos.x = WIDTH_W;
+    }
+    if (pos.y > HEIGHT_W)
+    {
+        pos.y = HEIGHT_W;
+    }
 
-	shape->setPosition(x, y);
+    shape->setPosition(pos);
+    startPos = pos;
 }
 
-bool Utilities::isColliding(sf::Shape* shape)
+//Retourne le côté de la collision, puis une meilleure gestion des rebonds
+int Utilities::isColliding(sf::Shape* shape)
 {
-	//On check si la hauteur de la balle dépasse un des bords de la fenêtre
-	if (shape->getOrigin().y + shape->getLocalBounds().height/2 > HEIGHT_W || shape->getOrigin().y - shape->getLocalBounds().height/2 < 0)
-	{
-		return true;
-	}
-	else
-		return false;
+    int side = 0; //On définit une chaine de caractère qui nous dit ou la collision avec la balle à lieu
 
-	//On check si la largeur de la balle dépasse la fenêtre
-	if (shape->getOrigin().x + shape->getLocalBounds().width/2 > WIDTH_W || shape->getOrigin().x - shape->getLocalBounds().width/2 < 0)
-	{
-		return true;
-	}
-	else
-		return false;
+    //On check si la hauteur de la balle dépasse un des bords de la fenêtre
+    if (shape->getPosition().y + shape->getLocalBounds().height / 2 > HEIGHT_W)
+    {
+        side = 2;
+        //shape->setPosition(shape->getPosition().x, shape->getPosition().y - 5); --> ne sers à rien, on veut que la balle tombe
 
-	return false;
+        shape->setPosition(startPos); //TODO si la balle sors par en dessous de l'écran, elle ne rebondit pas
+        blocked = false;
+    }
+    else if (shape->getPosition().y - shape->getLocalBounds().height / 2 < 0)
+    {
+        side = 1;
+        shape->setPosition(shape->getPosition().x, shape->getPosition().y + 5);
+    }
+
+    //On check si la largeur de la balle dépasse la fenêtre
+    if (shape->getPosition().x + shape->getLocalBounds().width / 2 > WIDTH_W)
+    {
+        side = 3;
+        shape->setPosition(shape->getPosition().x - 5, shape->getPosition().y);
+    }
+    else if(shape->getPosition().x - shape->getLocalBounds().width / 2 < 0)
+    {
+        side = 4;
+        shape->setPosition(shape->getPosition().x + 5, shape->getPosition().y);
+    }
+    return side;
 }
