@@ -4,28 +4,38 @@
 
 int main()
 {
+#pragma region Variables
     Utilities Util;
 
-    Util.windowSetup();
-
-    sf::CircleShape shape(25.f); //On définit la taille du cercle
-    shape.setFillColor(sf::Color::Red);
+    sf::CircleShape shape(20.f); //On définit la taille du cercle
 
     sf::Vector2f startPosition(Util.WIDTH_W / 2, Util.HEIGHT_W / 2);
 
-    Util.setShapeOrigine(&shape, 0.5, 0.5); //On set le point de pivot de la balle au milieu de l'axe X et en bas
-
-    Util.setObjectPosition(&shape, startPosition); //On place la balle en bas de l'écran, quelle que soit sa taille.
-
     sf::Clock oClock;
 
-    sf::Vector2f speed(0, 0); //Initialisation avec vitesse négative parce que ça part vers le haut
+    float speed = 0; //Initialisation de la vitesse
 
+    sf::Vector2f dir(0, 0); //On stocke la direction de chaque clicks
+#pragma endregion
+
+#pragma region Traitement
+    Util.windowSetup();
+
+    shape.setFillColor(sf::Color::Red);
+
+    Util.setShapeOrigine(&shape, 0.5, 0.5); //On set le point de pivot de la balle au milieu de l'axe X et Y
+
+    Util.setObjectPosition(&shape, startPosition); //On place la balle en bas de l'écran, quelle que soit sa taille.
+#pragma endregion
+
+#pragma region Update
     while (Util.getWindow()->isOpen())
     {
+        //Mise en place du deltaTime
         float deltaTime = oClock.getElapsedTime().asSeconds();
         oClock.restart();
 
+        //Evenement de fenêtre de base (fermeture)
         sf::Event event;
         while (Util.getWindow()->pollEvent(event))
         {
@@ -36,46 +46,50 @@ int main()
         //Si on clique
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
+            speed = 200;
+
             //On lit la position locale de la souris (relativement à une fenêtre)
-            sf::Vector2i localPosition = sf::Mouse::getPosition(*Util.getWindow()); // window est un sf::Window et pas un sf::RenderWindow
+            sf::Vector2i localPosition = sf::Mouse::getPosition(*Util.getWindow()); //window est un sf::Window et pas un sf::RenderWindow
 
             //On récupère le vecteur entre la position du centre de la balle et la souris et on le normalise (oui ça fait beaucoup)
-            Util.normalize(Util.getVectorBtw(shape.getPosition(), sf::Vector2f(localPosition)));
-
-            speed.y = -300; //Quand on clique ça lance la vitesse
-            speed.x = 300;
+            dir = Util.normalize(Util.getVectorBtw(shape.getPosition(), sf::Vector2f(localPosition)));
             //Util.blocked = true;
         }
 
-        //En fonction du renvoi de la fonction, on applique un caractère à la balle
+        //En fonction du renvoi de la fonction, on change sa direction
         switch (Util.isColliding(&shape))
         {
-            case 1:
-                speed.y = -speed.y;
-                break;
-            case 2:
-                speed.y = 0;
-                speed.x = 0;
-                shape.setPosition(startPosition);
-                break;
-            case 3:
-                speed.x = -speed.x;
-                break;
-            case 4:
-                speed.x = -speed.x;
-                break;
-            default:
-                break;
+        case 1:
+            dir.y = -dir.y;
+            break;
+        case 2:
+            dir.y = 0;
+            dir.x = 0;
+            speed = 0;
+            shape.setPosition(startPosition);
+            break;
+        case 3:
+            dir.x = -dir.x;
+            break;
+        case 4:
+            dir.x = -dir.x;
+            break;
+        default:
+            break;
         }
 
-        shape.setPosition(shape.getPosition() + speed * deltaTime);
+        //Si la vitesse est égale à 0, le calcul de position va être = 0, et le rond va rester bloqué en haut à gauche
+        if (speed != 0)
+        {
+            //Pour bouger, on ajoute à la postition la direction, qu'on multiplie par la vitesse et le deltaTime.
+            shape.setPosition(shape.getPosition() + dir * speed * deltaTime);
+        }
 
         Util.getWindow()->clear();
         Util.getWindow()->draw(shape);
         Util.getWindow()->display();
-
-        //std::cout << deltaTime << std::endl;
     }
+#pragma endregion
 
     return 0;
 }

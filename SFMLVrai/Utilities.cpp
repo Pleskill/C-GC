@@ -1,8 +1,6 @@
 #include "Utilities.h"
 #include <math.h>
 
-sf::Vector2f startPos(0,0);
-
 void Utilities::setShapeOrigine(sf::Shape* shape, float x, float y)
 {
     shape->setOrigin(shape->getLocalBounds().width * x, shape->getLocalBounds().height * y);
@@ -20,7 +18,6 @@ void Utilities::setObjectPosition(sf::Shape* shape, sf::Vector2f pos)
     }
 
     shape->setPosition(pos);
-    startPos = pos;
 }
 
 //Retourne le côté de la collision, puis une meilleure gestion des rebonds
@@ -32,8 +29,6 @@ int Utilities::isColliding(sf::Shape* shape)
     if (shape->getPosition().y + shape->getLocalBounds().height / 2 > HEIGHT_W)
     {
         side = 2;
-
-        shape->setPosition(startPos); //TODO si la balle sors par en dessous de l'écran, elle ne rebondit pas
         blocked = false;
     }
     else if (shape->getPosition().y - shape->getLocalBounds().height / 2 < 0)
