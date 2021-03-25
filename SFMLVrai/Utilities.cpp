@@ -31,7 +31,6 @@ int Utilities::isColliding(sf::Shape* shape)
     if (shape->getPosition().y + shape->getLocalBounds().height / 2 > HEIGHT_W)
     {
         side = 2;
-        //shape->setPosition(shape->getPosition().x, shape->getPosition().y - 5); --> ne sers à rien, on veut que la balle tombe
 
         shape->setPosition(startPos); //TODO si la balle sors par en dessous de l'écran, elle ne rebondit pas
         blocked = false;
@@ -54,4 +53,21 @@ int Utilities::isColliding(sf::Shape* shape)
         shape->setPosition(shape->getPosition().x + 5, shape->getPosition().y);
     }
     return side;
+
+    // récupéré position souris 
+
+    // on lit la position locale de la souris (relativement à une fenêtre)
+    //sf::Vector2i localPosition = sf::Mouse::getPosition(window); // window est un sf::Window 
+
+}
+
+void Utilities::windowSetup() {
+    
+   window = new sf::RenderWindow(sf::VideoMode(WIDTH_W, HEIGHT_W), "Cercle vert"); //On définit une taille de fenêtre de base en dur.
+    
+}
+
+sf::RenderWindow* Utilities::getWindow()
+{
+    return window;
 }

@@ -6,7 +6,7 @@ int main()
 {
     Utilities Util;
 
-    sf::RenderWindow window(sf::VideoMode(Util.WIDTH_W, Util.HEIGHT_W), "Cercle vert"); //On définit une taille de fenêtre de base en dur.
+    Util.windowSetup();
     sf::CircleShape shape(25.f); //On définit la taille du cercle
     shape.setFillColor(sf::Color::Red);
 
@@ -20,16 +20,16 @@ int main()
 
     sf::Vector2f speed(0, 0); //Initialisation avec vitesse négative parce que ça part vers le haut
 
-    while (window.isOpen())
+    while (Util.getWindow()->isOpen())
     {
         float deltaTime = oClock.getElapsedTime().asSeconds();
         oClock.restart();
 
         sf::Event event;
-        while (window.pollEvent(event))
+        while (Util.getWindow()->pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
-                window.close();
+                Util.getWindow()->close();
         }
 
         //Si on clique et que blocked est faux, donc que la balle n'est pas bloquée
@@ -63,9 +63,9 @@ int main()
 
         shape.setPosition(shape.getPosition() + speed * deltaTime);
 
-        window.clear();
-        window.draw(shape);
-        window.display();
+        Util.getWindow()->clear();
+        Util.getWindow()->draw(shape);
+        Util.getWindow()->display();
 
         std::cout << deltaTime << std::endl;
     }

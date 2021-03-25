@@ -10,9 +10,15 @@ public:
 
     bool blocked = false;
 
+    sf::RenderWindow* window;
+
     void setShapeOrigine(sf::Shape* shape, float x, float y);
 
     void setObjectPosition(sf::Shape* shape, sf::Vector2f);
 
     int isColliding(sf::Shape* shape);
+
+    void windowSetup();
+
+    sf::RenderWindow* getWindow();
 };
