@@ -1,4 +1,5 @@
 #include "Utilities.h"
+#include <math.h>
 
 sf::Vector2f startPos(0,0);
 
@@ -53,21 +54,27 @@ int Utilities::isColliding(sf::Shape* shape)
         shape->setPosition(shape->getPosition().x + 5, shape->getPosition().y);
     }
     return side;
-
-    // récupéré position souris 
-
-    // on lit la position locale de la souris (relativement à une fenêtre)
-    //sf::Vector2i localPosition = sf::Mouse::getPosition(window); // window est un sf::Window 
-
 }
 
-void Utilities::windowSetup() {
-    
+void Utilities::windowSetup() 
+{
    window = new sf::RenderWindow(sf::VideoMode(WIDTH_W, HEIGHT_W), "Cercle vert"); //On définit une taille de fenêtre de base en dur.
-    
 }
 
 sf::RenderWindow* Utilities::getWindow()
 {
     return window;
+}
+
+sf::Vector2f Utilities::getVectorBtw(sf::Vector2f posObj1, sf::Vector2f posObj2)
+{
+    sf::Vector2f dir(posObj2.x - posObj1.x, posObj2.y - posObj1.y);
+    return dir;
+}
+
+sf::Vector2f Utilities::normalize(sf::Vector2f vect)
+{
+    float norme = sqrt(vect.x * vect.x + vect.y * vect.y);
+
+    return sf::Vector2f(vect.x / norme, vect.y / norme);
 }

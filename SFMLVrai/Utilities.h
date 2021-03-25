@@ -21,4 +21,8 @@ public:
     void windowSetup();
 
     sf::RenderWindow* getWindow();
+
+    sf::Vector2f getVectorBtw(sf::Vector2f posObj1, sf::Vector2f posObj2);
+
+    sf::Vector2f normalize(sf::Vector2f vect);
 };

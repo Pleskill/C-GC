@@ -7,6 +7,7 @@ int main()
     Utilities Util;
 
     Util.windowSetup();
+
     sf::CircleShape shape(25.f); //On définit la taille du cercle
     shape.setFillColor(sf::Color::Red);
 
@@ -32,12 +33,18 @@ int main()
                 Util.getWindow()->close();
         }
 
-        //Si on clique et que blocked est faux, donc que la balle n'est pas bloquée
+        //Si on clique
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
+            //On lit la position locale de la souris (relativement à une fenêtre)
+            sf::Vector2i localPosition = sf::Mouse::getPosition(*Util.getWindow()); // window est un sf::Window et pas un sf::RenderWindow
+
+            //On récupère le vecteur entre la position du centre de la balle et la souris et on le normalise (oui ça fait beaucoup)
+            Util.normalize(Util.getVectorBtw(shape.getPosition(), sf::Vector2f(localPosition)));
+
             speed.y = -300; //Quand on clique ça lance la vitesse
             speed.x = 300;
-            Util.blocked = true;
+            //Util.blocked = true;
         }
 
         //En fonction du renvoi de la fonction, on applique un caractère à la balle
@@ -67,7 +74,7 @@ int main()
         Util.getWindow()->draw(shape);
         Util.getWindow()->display();
 
-        std::cout << deltaTime << std::endl;
+        //std::cout << deltaTime << std::endl;
     }
 
     return 0;
