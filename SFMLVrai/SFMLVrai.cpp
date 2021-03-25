@@ -36,7 +36,7 @@ int main()
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
             speed.y = -300; //Quand on clique ça lance la vitesse
-            //speed.x = 100;
+            speed.x = 300;
             Util.blocked = true;
         }
 
@@ -48,6 +48,7 @@ int main()
                 break;
             case 2:
                 speed.y = 0;
+                speed.x = 0;
                 shape.setPosition(startPosition);
                 break;
             case 3:
