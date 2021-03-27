@@ -34,6 +34,10 @@ void Ball::create()
 {
 	ball = new sf::CircleShape(20.f);
 	ball->setPosition(0, 0);
+
+    //On set la direction de la balle en prévision
+    dir.x = 0;
+    dir.y = 0;
 }
 
 sf::Vector2f Ball::getPos()
@@ -56,31 +60,35 @@ void Ball::setPos(sf::Shape* prop, sf::Vector2f pos)
 }
 
 //Retourne le côté de la collision, pour une meilleure gestion des rebonds
-int Ball::isColliding(sf::Shape* shape, sf::Shape* other)
+sf::Vector2f Ball::isColliding(sf::Shape* shape, sf::Shape* other)
 {
-    int side = 0; //On définit un int qui nous dit ou la collision avec la balle à lieu
+    sf::Vector2f startPosition(Util.WIDTH_W / 2, Util.HEIGHT_W - shape->getLocalBounds().height / 2);
 
 #pragma region Collisions écran
     //On check si la hauteur de la balle dépasse un des bords de la fenêtre
     if (shape->getPosition().y + shape->getLocalBounds().height / 2 > Util.HEIGHT_W)
     {
-        side = 2;
+        dir.x = 0;
+        dir.y = 0;
+        speed = 0;
+        shape->setPosition(startPosition);
+        Util.blocked = false;
     }
     else if (shape->getPosition().y - shape->getLocalBounds().height / 2 < 0)
     {
-        side = 1;
+        dir.y = -dir.y;
         shape->setPosition(shape->getPosition().x, shape->getPosition().y + 5);
     }
 
     //On check si la largeur de la balle dépasse la fenêtre
     if (shape->getPosition().x + shape->getLocalBounds().width / 2 > Util.WIDTH_W)
     {
-        side = 3;
+        dir.x = -dir.x;
         shape->setPosition(shape->getPosition().x - 5, shape->getPosition().y);
     }
     else if (shape->getPosition().x - shape->getLocalBounds().width / 2 < 0)
     {
-        side = 4;
+        dir.x = -dir.x;
         shape->setPosition(shape->getPosition().x + 5, shape->getPosition().y);
     }
 #pragma endregion
@@ -96,23 +104,43 @@ int Ball::isColliding(sf::Shape* shape, sf::Shape* other)
         //Si la balle tape sur la gauche de l'objet
         if (distGauche < distDroite && distGauche < distHaut && distGauche < distBas)
         {
-            side = 3;
+            dir.x = -dir.x;
         }
         //Si elle tape sur la droite
         else if (distDroite < distGauche && distDroite < distHaut && distDroite < distBas)
         {
-            side = 4;
+            dir.x = -dir.x;
         }
         //Si elle tape en haut
         else if (distHaut < distGauche && distHaut < distDroite && distHaut < distBas)
         {
-            side = 2;
+            dir.y = -dir.y;
         }
         //Et dans le dernier cas, collision en bas
         else
-            side = 1;
+            dir.y = -dir.y;
     }
 #pragma endregion
 
-    return side;
+    return dir;
+}
+
+sf::Vector2f Ball::getDir()
+{
+    return dir;
+}
+
+void Ball::setDir(sf::Vector2f direction)
+{
+    dir = direction;
+}
+
+float Ball::getSpeed()
+{
+    return speed;
+}
+
+void Ball::setSpeed(float s)
+{
+    speed = s;
 }

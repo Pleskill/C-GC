@@ -43,8 +43,20 @@ public:
 
 	sf::CircleShape* ball;
 
-	int isColliding(sf::Shape* shape, sf::Shape* other);
+	sf::Vector2f isColliding(sf::Shape* shape, sf::Shape* other);
+
+	sf::Vector2f getDir();
+
+	void setDir(sf::Vector2f dir);
+
+	float getSpeed();
+
+	void setSpeed(float s);
 
 private:
 	sf::Vector2f ballPos;
+
+	sf::Vector2f dir;
+
+	float speed;
 };

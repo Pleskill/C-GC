@@ -21,10 +21,6 @@ int main()
     sf::Vector2f startPosition(Util.WIDTH_W / 2, Util.HEIGHT_W - shape.getLocalBounds().height /2);
 
     sf::Clock oClock;
-
-    float speed = 0; //Initialisation de la vitesse
-
-    sf::Vector2f dir(0, 0); //On stocke la direction de chaque clicks
 #pragma endregion
 
 #pragma region Start
@@ -56,44 +52,24 @@ int main()
         //Si on clique
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !Util.blocked)
         {
-            speed = 500;
+            Ball.setSpeed(500);
 
             //On lit la position locale de la souris (relativement à une fenêtre)
             sf::Vector2i localPosition = sf::Mouse::getPosition(*Util.getWindow()); //window est un sf::Window et pas un sf::RenderWindow
 
             //On récupère le vecteur entre la position du centre de la balle et la souris et on le normalise (oui ça fait beaucoup)
-            dir = Util.normalize(Util.getVectorBtw(shape.getPosition(), sf::Vector2f(localPosition)));
+            Ball.setDir(Util.normalize(Util.getVectorBtw(shape.getPosition(), sf::Vector2f(localPosition))));
             Util.blocked = true;
         }
 
         //En fonction du renvoi de la fonction, on change sa direction
-        switch (Ball.isColliding(&shape, &bloc))
-        {
-        case 1:
-            dir.y = -dir.y;
-            break;
-        case 2:
-            dir.y = 0;
-            dir.x = 0;
-            speed = 0;
-            shape.setPosition(startPosition);
-            Util.blocked = false;
-            break;
-        case 3:
-            dir.x = -dir.x;
-            break;
-        case 4:
-            dir.x = -dir.x;
-            break;
-        default:
-            break;
-        }
+        Ball.setDir(Ball.isColliding(&shape, &bloc));
 
         //Si la vitesse est égale à 0, le calcul de position va être = 0, et le rond va rester bloqué en haut à gauche
-        if (speed != 0)
+        if (Ball.getSpeed() != 0)
         {
             //Pour bouger, on ajoute à la postition la direction, qu'on multiplie par la vitesse et le deltaTime.
-            shape.setPosition(shape.getPosition() + dir * speed * deltaTime);
+            shape.setPosition(shape.getPosition() + Ball.getDir() * Ball.getSpeed() * deltaTime);
         }
 
         Util.getWindow()->clear();
