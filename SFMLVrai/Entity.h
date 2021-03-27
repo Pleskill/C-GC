@@ -43,7 +43,9 @@ public:
 
 	sf::CircleShape* ball;
 
-	sf::Vector2f isColliding(sf::Shape* shape, sf::Shape* other);
+	sf::Vector2f isColliding(sf::Shape* shape);
+
+	sf::Vector2f isCollidingWith(sf::Shape* shape, sf::Shape* other);
 
 	sf::Vector2f getDir();
 

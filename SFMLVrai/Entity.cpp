@@ -61,20 +61,21 @@ void Ball::setPos(sf::Shape* prop, sf::Vector2f pos)
 }
 
 //Retourne le côté de la collision, pour une meilleure gestion des rebonds
-sf::Vector2f Ball::isColliding(sf::Shape* shape, sf::Shape* other)
+sf::Vector2f Ball::isColliding(sf::Shape* shape)
 {
-    sf::Vector2f startPosition(Util.getWidth() / 2, Util.getHeight() - shape->getLocalBounds().height / 2);
-
     float offset = 2.f;
 
 #pragma region Collisions écran
     //On check si la hauteur de la balle dépasse un des bords de la fenêtre
     if (shape->getPosition().y + shape->getLocalBounds().height / 2 > Util.getWidth())
     {
+        std::cout << "check" << std::endl;
+        speed = 0;
         dir.x = 0;
         dir.y = 0;
-        speed = 0;
-        shape->setPosition(startPosition);
+        
+        //On replace la balle en gardant la position en x
+        shape->setPosition(shape->getPosition().x, Util.getHeight() - shape->getLocalBounds().height / 2);
         Util.setBlocked(false);
     }
     else if (shape->getPosition().y - shape->getLocalBounds().height / 2 < 0)
@@ -96,7 +97,13 @@ sf::Vector2f Ball::isColliding(sf::Shape* shape, sf::Shape* other)
     }
 #pragma endregion
 
-#pragma region Collision Autre
+    return dir;
+}
+
+sf::Vector2f Ball::isCollidingWith(sf::Shape* shape, sf::Shape* other) 
+{
+    float offset = 2.f;
+
     if (shape->getGlobalBounds().intersects(other->getGlobalBounds()))
     {
         float distGauche = abs(shape->getGlobalBounds().width - other->getGlobalBounds().left);
@@ -108,26 +115,25 @@ sf::Vector2f Ball::isColliding(sf::Shape* shape, sf::Shape* other)
         if (distGauche < distDroite && distGauche < distHaut && distGauche < distBas)
         {
             dir.x = -dir.x;
-            shape->move(0, -offset);
+            shape->move(offset, 0);
         }
         //Si elle tape sur la droite
         else if (distDroite < distGauche && distDroite < distHaut && distDroite < distBas)
         {
             dir.x = -dir.x;
-            shape->move(0, offset);
+            shape->move(-offset, 0);
         }
         //Si elle tape en haut
         else if (distHaut < distGauche && distHaut < distDroite && distHaut < distBas)
         {
             dir.y = -dir.y;
-            shape->move(-offset, 0);
+            shape->move(0, offset);
         }
         //Et dans le dernier cas, collision en bas
         else
             dir.y = -dir.y;
-            shape->move(offset, 0);
+        shape->move(0, -offset);
     }
-#pragma endregion
 
     return dir;
 }
