@@ -67,7 +67,7 @@ int main()
         }
 
         //En fonction du renvoi de la fonction, on change sa direction
-        switch (Util.isColliding(&shape))
+        switch (Ball.isColliding(&shape, &bloc))
         {
         case 1:
             dir.y = -dir.y;

@@ -43,6 +43,8 @@ public:
 
 	sf::CircleShape* ball;
 
+	int isColliding(sf::Shape* shape, sf::Shape* other);
+
 private:
 	sf::Vector2f ballPos;
 };

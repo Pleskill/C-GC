@@ -6,37 +6,6 @@ void Utilities::setShapeOrigine(sf::Shape* shape, float x, float y)
     shape->setOrigin(shape->getLocalBounds().width * x, shape->getLocalBounds().height * y);
 }
 
-//Retourne le côté de la collision, puis une meilleure gestion des rebonds
-int Utilities::isColliding(sf::Shape* shape)
-{
-    int side = 0; //On définit une chaine de caractère qui nous dit ou la collision avec la balle à lieu
-
-    //On check si la hauteur de la balle dépasse un des bords de la fenêtre
-    if (shape->getPosition().y + shape->getLocalBounds().height / 2 > HEIGHT_W)
-    {
-        side = 2;
-        blocked = false;
-    }
-    else if (shape->getPosition().y - shape->getLocalBounds().height / 2 < 0)
-    {
-        side = 1;
-        shape->setPosition(shape->getPosition().x, shape->getPosition().y + 5);
-    }
-
-    //On check si la largeur de la balle dépasse la fenêtre
-    if (shape->getPosition().x + shape->getLocalBounds().width / 2 > WIDTH_W)
-    {
-        side = 3;
-        shape->setPosition(shape->getPosition().x - 5, shape->getPosition().y);
-    }
-    else if(shape->getPosition().x - shape->getLocalBounds().width / 2 < 0)
-    {
-        side = 4;
-        shape->setPosition(shape->getPosition().x + 5, shape->getPosition().y);
-    }
-    return side;
-}
-
 void Utilities::windowSetup() 
 {
    window = new sf::RenderWindow(sf::VideoMode(WIDTH_W, HEIGHT_W), "Cercle vert"); //On définit une taille de fenêtre de base en dur.
