@@ -6,20 +6,6 @@ void Utilities::setShapeOrigine(sf::Shape* shape, float x, float y)
     shape->setOrigin(shape->getLocalBounds().width * x, shape->getLocalBounds().height * y);
 }
 
-void Utilities::setObjectPosition(sf::Shape* shape, sf::Vector2f pos)
-{
-    if (pos.x > WIDTH_W)
-    {
-        pos.x = WIDTH_W;
-    }
-    if (pos.y > HEIGHT_W)
-    {
-        pos.y = HEIGHT_W;
-    }
-
-    shape->setPosition(pos);
-}
-
 //Retourne le côté de la collision, puis une meilleure gestion des rebonds
 int Utilities::isColliding(sf::Shape* shape)
 {

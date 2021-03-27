@@ -1,13 +1,17 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Utilities.h";
+#include "Entity.h";
 
 int main()
 {
 #pragma region Variables
     Utilities Util;
+    Ball Ball;
+    Brick Brick;
 
-    sf::CircleShape shape(20.f); //On définit la taille du cercle
+    Ball.create();
+    sf::CircleShape shape = *Ball.ball;
 
     sf::Vector2f startPosition(Util.WIDTH_W / 2, Util.HEIGHT_W / 2);
 
@@ -18,14 +22,14 @@ int main()
     sf::Vector2f dir(0, 0); //On stocke la direction de chaque clicks
 #pragma endregion
 
-#pragma region Traitement
-    Util.windowSetup();
+#pragma region Start
+    Util.windowSetup(); //On définit + récupère la fenêtre de jeu
 
-    shape.setFillColor(sf::Color::Red);
+    shape.setFillColor(sf::Color::Red); //Balle en rouge
 
     Util.setShapeOrigine(&shape, 0.5, 0.5); //On set le point de pivot de la balle au milieu de l'axe X et Y
 
-    Util.setObjectPosition(&shape, startPosition); //On place la balle en bas de l'écran, quelle que soit sa taille.
+    Ball.setPos(&shape, startPosition); //On place la balle en bas de l'écran, quelle que soit sa taille.
 #pragma endregion
 
 #pragma region Update
