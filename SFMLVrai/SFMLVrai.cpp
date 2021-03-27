@@ -18,7 +18,7 @@ int main()
     Brick.create();
     sf::RectangleShape bloc = *Brick.brick;
 
-    sf::Vector2f startPosition(Util.WIDTH_W / 2, Util.HEIGHT_W - shape.getLocalBounds().height /2);
+    sf::Vector2f startPosition(Util.getWidth() / 2, Util.getHeight() - shape.getLocalBounds().height /2);
 
     sf::Clock oClock;
 #pragma endregion
@@ -50,7 +50,7 @@ int main()
         }
 
         //Si on clique
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !Util.blocked)
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !Util.getBlocked())
         {
             Ball.setSpeed(500);
 
@@ -59,7 +59,7 @@ int main()
 
             //On récupère le vecteur entre la position du centre de la balle et la souris et on le normalise (oui ça fait beaucoup)
             Ball.setDir(Util.normalize(Util.getVectorBtw(shape.getPosition(), sf::Vector2f(localPosition))));
-            Util.blocked = true;
+            Util.setBlocked(true);
         }
 
         //En fonction du renvoi de la fonction, on change sa direction

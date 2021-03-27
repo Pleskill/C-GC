@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Entity.h"
 #include "Utilities.h"
 #include <math.h>
@@ -17,13 +18,13 @@ sf::Vector2f Brick::getPos()
 
 void Brick::setPos(sf::Shape* prop, sf::Vector2f pos)
 {
-    if (pos.x > Util.WIDTH_W)
+    if (pos.x > Util.getWidth())
     {
-        pos.x = Util.WIDTH_W;
+        pos.x = Util.getWidth();
     }
-    if (pos.y > Util.HEIGHT_W)
+    if (pos.y > Util.getHeight())
     {
-        pos.y = Util.HEIGHT_W;
+        pos.y = Util.getHeight();
     }
 
     prop->setPosition(pos);
@@ -47,13 +48,13 @@ sf::Vector2f Ball::getPos()
 
 void Ball::setPos(sf::Shape* prop, sf::Vector2f pos)
 {
-    if (pos.x > Util.WIDTH_W)
+    if (pos.x > Util.getWidth())
     {
-        pos.x = Util.WIDTH_W;
+        pos.x = Util.getWidth();
     }
-    if (pos.y > Util.HEIGHT_W)
+    if (pos.y > Util.getHeight())
     {
-        pos.y = Util.HEIGHT_W;
+        pos.y = Util.getHeight();
     }
 
     prop->setPosition(pos);
@@ -62,17 +63,19 @@ void Ball::setPos(sf::Shape* prop, sf::Vector2f pos)
 //Retourne le côté de la collision, pour une meilleure gestion des rebonds
 sf::Vector2f Ball::isColliding(sf::Shape* shape, sf::Shape* other)
 {
-    sf::Vector2f startPosition(Util.WIDTH_W / 2, Util.HEIGHT_W - shape->getLocalBounds().height / 2);
+    sf::Vector2f startPosition(Util.getWidth() / 2, Util.getHeight() - shape->getLocalBounds().height / 2);
+
+    float offset = 2.f;
 
 #pragma region Collisions écran
     //On check si la hauteur de la balle dépasse un des bords de la fenêtre
-    if (shape->getPosition().y + shape->getLocalBounds().height / 2 > Util.HEIGHT_W)
+    if (shape->getPosition().y + shape->getLocalBounds().height / 2 > Util.getWidth())
     {
         dir.x = 0;
         dir.y = 0;
         speed = 0;
         shape->setPosition(startPosition);
-        Util.blocked = false;
+        Util.setBlocked(false);
     }
     else if (shape->getPosition().y - shape->getLocalBounds().height / 2 < 0)
     {
@@ -81,7 +84,7 @@ sf::Vector2f Ball::isColliding(sf::Shape* shape, sf::Shape* other)
     }
 
     //On check si la largeur de la balle dépasse la fenêtre
-    if (shape->getPosition().x + shape->getLocalBounds().width / 2 > Util.WIDTH_W)
+    if (shape->getPosition().x + shape->getLocalBounds().width / 2 > Util.getWidth())
     {
         dir.x = -dir.x;
         shape->setPosition(shape->getPosition().x - 5, shape->getPosition().y);
@@ -105,20 +108,24 @@ sf::Vector2f Ball::isColliding(sf::Shape* shape, sf::Shape* other)
         if (distGauche < distDroite && distGauche < distHaut && distGauche < distBas)
         {
             dir.x = -dir.x;
+            shape->move(0, -offset);
         }
         //Si elle tape sur la droite
         else if (distDroite < distGauche && distDroite < distHaut && distDroite < distBas)
         {
             dir.x = -dir.x;
+            shape->move(0, offset);
         }
         //Si elle tape en haut
         else if (distHaut < distGauche && distHaut < distDroite && distHaut < distBas)
         {
             dir.y = -dir.y;
+            shape->move(-offset, 0);
         }
         //Et dans le dernier cas, collision en bas
         else
             dir.y = -dir.y;
+            shape->move(offset, 0);
     }
 #pragma endregion
 

@@ -28,3 +28,23 @@ sf::Vector2f Utilities::normalize(sf::Vector2f vect)
 
     return sf::Vector2f(vect.x / norme, vect.y / norme);
 }
+
+float Utilities::getWidth()
+{
+    return WIDTH_W;
+}
+
+float Utilities::getHeight()
+{
+    return HEIGHT_W;
+}
+
+bool Utilities::getBlocked()
+{
+    return blocked;
+}
+
+void Utilities::setBlocked(bool b)
+{
+    blocked = b;
+}
