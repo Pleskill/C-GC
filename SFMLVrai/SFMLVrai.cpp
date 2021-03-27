@@ -10,10 +10,15 @@ int main()
     Ball Ball;
     Brick Brick;
 
+    //Création de balle et association a une variable
     Ball.create();
     sf::CircleShape shape = *Ball.ball;
 
-    sf::Vector2f startPosition(Util.WIDTH_W / 2, Util.HEIGHT_W / 2);
+    //Création de brique et association a une variable
+    Brick.create();
+    sf::RectangleShape bloc = *Brick.brick;
+
+    sf::Vector2f startPosition(Util.WIDTH_W / 2, Util.HEIGHT_W - shape.getLocalBounds().height /2);
 
     sf::Clock oClock;
 
@@ -30,6 +35,7 @@ int main()
     Util.setShapeOrigine(&shape, 0.5, 0.5); //On set le point de pivot de la balle au milieu de l'axe X et Y
 
     Ball.setPos(&shape, startPosition); //On place la balle en bas de l'écran, quelle que soit sa taille.
+    Brick.setPos(&bloc, sf::Vector2f(100, 100)); //On place une brique sur l'écran pour les tests
 #pragma endregion
 
 #pragma region Update
@@ -48,16 +54,16 @@ int main()
         }
 
         //Si on clique
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !Util.blocked)
         {
-            speed = 200;
+            speed = 500;
 
             //On lit la position locale de la souris (relativement à une fenêtre)
             sf::Vector2i localPosition = sf::Mouse::getPosition(*Util.getWindow()); //window est un sf::Window et pas un sf::RenderWindow
 
             //On récupère le vecteur entre la position du centre de la balle et la souris et on le normalise (oui ça fait beaucoup)
             dir = Util.normalize(Util.getVectorBtw(shape.getPosition(), sf::Vector2f(localPosition)));
-            //Util.blocked = true;
+            Util.blocked = true;
         }
 
         //En fonction du renvoi de la fonction, on change sa direction
@@ -71,6 +77,7 @@ int main()
             dir.x = 0;
             speed = 0;
             shape.setPosition(startPosition);
+            Util.blocked = false;
             break;
         case 3:
             dir.x = -dir.x;
@@ -91,6 +98,7 @@ int main()
 
         Util.getWindow()->clear();
         Util.getWindow()->draw(shape);
+        Util.getWindow()->draw(bloc);
         Util.getWindow()->display();
     }
 #pragma endregion
