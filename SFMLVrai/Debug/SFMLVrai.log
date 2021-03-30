@@ -1,2 +1,17 @@
 ﻿  Entity.cpp
+  SFMLVrai.cpp
+D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(46,23): warning C4018: '<=': signed/unsigned mismatch
+D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(48,60): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(85,27): warning C4018: '<=': signed/unsigned mismatch
+D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(101,27): warning C4018: '<=': signed/unsigned mismatch
+  Utilities.cpp
+D:\projVS\C-GC\SFMLVrai\Utilities.cpp(13,57): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+D:\projVS\C-GC\SFMLVrai\Utilities.cpp(13,48): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  Generating Code...
   SFMLVrai.vcxproj -> D:\projVS\C-GC\Debug\SFMLVrai.exe

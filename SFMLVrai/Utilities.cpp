@@ -1,6 +1,8 @@
 #include "Utilities.h"
 #include <math.h>
 
+bool Utilities::blocked = false;
+
 void Utilities::setShapeOrigine(sf::Shape* shape, float x, float y)
 {
     shape->setOrigin(shape->getLocalBounds().width * x, shape->getLocalBounds().height * y);

@@ -24,10 +24,10 @@ public:
     bool getBlocked();
 
     void setBlocked(bool b);
+
+    static bool blocked;
     
 private:
     float WIDTH_W = 1280;
     float HEIGHT_W = 720;
-
-    bool blocked = false;
 };

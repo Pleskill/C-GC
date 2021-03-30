@@ -36,6 +36,8 @@ class Ball : public Entity
 public:
 	void create();
 
+	~Ball();
+
 	//Relatif aux positions de la brique
 	sf::Vector2f getPos();
 

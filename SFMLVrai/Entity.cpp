@@ -41,6 +41,11 @@ void Ball::create()
     dir.y = 0;
 }
 
+Ball::~Ball()
+{
+    delete ball;
+}
+
 sf::Vector2f Ball::getPos()
 {
 	return ball->getPosition();
@@ -67,16 +72,17 @@ sf::Vector2f Ball::isColliding(sf::Shape* shape)
 
 #pragma region Collisions écran
     //On check si la hauteur de la balle dépasse un des bords de la fenêtre
-    if (shape->getPosition().y + shape->getLocalBounds().height / 2 > Util.getWidth())
+    if (shape->getPosition().y + shape->getLocalBounds().height / 2 > Util.getHeight())
     {
         std::cout << "check" << std::endl;
         speed = 0;
         dir.x = 0;
         dir.y = 0;
+
+        Util.setBlocked(false); //Marche pas ...
         
         //On replace la balle en gardant la position en x
-        shape->setPosition(shape->getPosition().x, Util.getHeight() - shape->getLocalBounds().height / 2);
-        Util.setBlocked(false);
+        shape->setPosition(shape->getPosition().x, (Util.getHeight() - shape->getLocalBounds().height / 2));
     }
     else if (shape->getPosition().y - shape->getLocalBounds().height / 2 < 0)
     {

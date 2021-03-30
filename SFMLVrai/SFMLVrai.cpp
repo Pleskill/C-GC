@@ -16,6 +16,8 @@ int main()
 
     std::vector<sf::RectangleShape> listBlocs;
 
+    Util.setBlocked(false);
+
     for (int i = 0; i <= 4; i++)
     {
         //Création de briques
@@ -64,7 +66,7 @@ int main()
         }
 
         //Si on clique
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //&& !Util.getBlocked())
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !Util.getBlocked())
         {
             Ball.setSpeed(500);
 
@@ -107,3 +109,14 @@ int main()
 
     return 0;
 }
+
+// Iterator
+// for(std::list<list> iterrator it = l.begin(), it != l.end(), it++)
+
+//Et pour le while :
+//auto it = l.begin()
+// while(it != l.end)
+// {
+//      l.erase(it); --> renvoie le prochain itératteur
+// }
+// it++
