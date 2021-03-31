@@ -1,53 +1,54 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <list>
 
 class Entity
 {
 public:
-	virtual void create() = 0;
-
 	virtual sf::Vector2f getPos() = 0;
 
-	virtual void setPos(sf::Shape* prop, sf::Vector2f pos) = 0;
+	virtual void setPos(sf::Vector2f pos) = 0;
 };
 
 class Brick : public Entity
 {
 public:
-	float height = 50;
-	float width = 100;
-
-	void create();
+	Brick(float h, float w);
 
 	//Relatif aux positions de la brique
 	sf::Vector2f getPos();
 
-	void setPos(sf::Shape* prop, sf::Vector2f pos);
+	void setPos(sf::Vector2f pos);
 
-	sf::RectangleShape* brick;
+	sf::RectangleShape shape;
+
+	float getHeight();
+
+	float getWidth();
 
 private:
 	sf::Vector2f brickPos;
+
+	float height;
+	float width;
 };
 
 class Ball : public Entity
 {
 public:
-	void create();
-
-	~Ball();
+	Ball(sf::Vector2f d, float s);
 
 	//Relatif aux positions de la brique
 	sf::Vector2f getPos();
 
-	void setPos(sf::Shape* prop, sf::Vector2f pos);
+	void setPos(sf::Vector2f pos);
 
-	sf::CircleShape* ball;
+	sf::CircleShape shape;
 
-	sf::Vector2f isColliding(sf::Shape* shape);
+	sf::Vector2f isColliding();
 
-	sf::Vector2f isCollidingWith(sf::Shape* shape, sf::Shape* other);
+	sf::Vector2f isCollidingWith(sf::Shape* other);
 
 	sf::Vector2f getDir();
 
