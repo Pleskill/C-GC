@@ -1,10 +1,9 @@
 ﻿  SFMLVrai.cpp
-C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(50,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(51,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(15,12): warning C4930: 'Cannon Cannon(void)': prototyped function not called (was a variable definition intended?)
-  SFMLVrai.vcxproj -> C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\Debug\SFMLVrai.exe
+  SFMLVrai.vcxproj -> D:\projVS\C-GC\Debug\SFMLVrai.exe

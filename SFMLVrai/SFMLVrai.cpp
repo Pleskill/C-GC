@@ -12,13 +12,11 @@ int main()
 #pragma region Variables
     Utilities Util;
     Ball Ball(sf::Vector2f(0, 0), 0);
-    Cannon Cannon();
+    Cannon Cannon(sf::Vector2f(0,0));
     LevelManager LM;
     ScoreManager SM;
 
     Util.setBlocked(false);
-  
-
 
     for (int i = 0; i <= 4; i++)
     {
@@ -27,21 +25,24 @@ int main()
         LM.bricksList.push_back(*b);
     }
 
-    sf::Vector2f startPosition(Util.getWidth() / 2, (Util.getHeight() - Ball.shape.getLocalBounds().height / 2));
+    sf::Vector2f startBallPosition(Util.getWidth() / 2, (Util.getHeight() - Ball.shape.getLocalBounds().height / 2));
+    sf::Vector2f startCanonPosition(Util.getWidth() / 2, (Util.getHeight() - Cannon.shape.getLocalBounds().height / 2));
 
     sf::Clock oClock;
 #pragma endregion
 
 #pragma region Start
-
-
     Util.windowSetup(); //On définit + récupère la fenêtre de jeu
 
     Util.setShapeOrigine(&Ball.shape, 0.5, 0.5); //On set le point de pivot de la balle au milieu de l'axe X et Y
 
     Ball.shape.setFillColor(sf::Color::Red); //Balle en rouge
 
-    Ball.shape.setPosition(startPosition); //On place la balle en bas de l'écran, quelle que soit sa taille.
+    Ball.shape.setPosition(startBallPosition); //On place la balle en bas de l'écran, quelle que soit sa taille.
+
+    Util.setShapeOrigine(&Cannon.shape, 0.5, 0.5); //On change l'origine du canon
+
+    Cannon.shape.setPosition(startCanonPosition); //Puis sa position
 
     int compteur = 0;
     //Pour tous les blocs de la liste, on va leur donner une position
@@ -64,6 +65,28 @@ int main()
 #pragma region Update
     while (Util.getWindow()->isOpen())
     {
+        //Une floppée de vecteurs, utiles pour les calculs de rotation et le déplacement de la balle
+        sf::Vector2f cannonForward = sf::Vector2f(1, 0);
+        sf::Vector2f cannonForwardNorm = Util.normalize(cannonForward);
+        sf::Vector2f souris = sf::Vector2f(sf::Mouse::getPosition(*Util.getWindow()));
+        sf::Vector2f sourisNorm = Util.normalize(souris);
+
+        //std::cout << std::to_string(Cannon.shape.getPosition().x) << " " << std::to_string(Cannon.shape.getPosition().y) << std::endl;
+
+        //On fait tourner le canon en fonction de la souris
+        Cannon.setAngle(Util.calculAngle(cannonForward, souris)); //--> marche pas
+
+        if (souris.x < Util.getWidth() / 2)
+        {
+            Cannon.shape.setRotation(-Cannon.getAngle());
+        }
+        else
+        {
+            Cannon.shape.setRotation(Cannon.getAngle());
+        }
+        
+        //Cannon.shape.rotate(0.5f); //--> marche
+
         //Mise en place du deltaTime
         float deltaTime = oClock.getElapsedTime().asSeconds();
         oClock.restart();
@@ -81,11 +104,9 @@ int main()
         {
             Ball.setSpeed(500.f);
 
-            //On lit la position locale de la souris (relativement à une fenêtre)
-            sf::Vector2i localPosition = sf::Mouse::getPosition(*Util.getWindow()); //window est un sf::Window et pas un sf::RenderWindow
+            //On applique la direction de la souris sur la balla
+            Ball.setDir(Util.CreateNormalizedVector(sf::Mouse::getPosition(*Util.getWindow()), Ball.getStartPos()));
 
-            //On récupère le vecteur entre la position du centre de la balle et la souris et on le normalise (oui ça fait beaucoup)
-            Ball.setDir(Util.normalize(Util.getVectorBtw(Ball.shape.getPosition(), sf::Vector2f(localPosition))));
             Util.setBlocked(true);
         }
 
@@ -111,6 +132,7 @@ int main()
 
         Util.getWindow()->clear();
         Util.getWindow()->draw(Ball.shape);
+        Util.getWindow()->draw(Cannon.shape);
 
         //Dessin de chaque éléments de la liste de blocs
         for (std::list<Brick>::iterator it = LM.bricksList.begin(); it != LM.bricksList.end(); it++)

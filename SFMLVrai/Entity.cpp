@@ -62,7 +62,8 @@ Ball::Ball(sf::Vector2f d, float s)
 {
     dir = d;
     speed = s;
-    shape.setRadius(20.f);
+    shape.setRadius(15.f);
+    startPos = sf::Vector2f(Util.getWidth() / 2, (Util.getHeight() - shape.getLocalBounds().height / 2));
 }
 
 sf::Vector2f Ball::getPos()
@@ -101,7 +102,7 @@ sf::Vector2f Ball::isColliding()
         Util.setBlocked(false);
         
         //On replace la balle en gardant la position en x
-        shape.setPosition(sf::Vector2f(shape.getPosition().x, (Util.getHeight() - shape.getLocalBounds().height / 2)));
+        shape.setPosition(startPos);
     }
     else if (shape.getPosition().y - shape.getLocalBounds().height / 2 < 0)
     {
@@ -187,11 +188,17 @@ void Ball::setSpeed(float s)
     speed = s;
 }
 
-Cannon::Cannon()
+sf::Vector2f Ball::getStartPos()
 {
+    return startPos;
+}
+
+Cannon::Cannon(sf::Vector2f p)
+{
+    pos = p;
     angle = 0;
     shape.setSize(sf::Vector2f(48, 60));
-    tex.loadFromFile("Ressource Files/cannon.png");
+    tex.loadFromFile("Ressource/cannon.png");
     shape.setTexture(&tex);
 }
 
@@ -200,7 +207,17 @@ float Cannon::getAngle()
     return angle;
 }
 
+sf::Vector2f Cannon::getPos()
+{
+    return pos;
+}
+
 void Cannon::setAngle(float f)
 {
     angle = f;
+}
+
+void Cannon::setPos(sf::Vector2f p)
+{
+    pos = p;
 }

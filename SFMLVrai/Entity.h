@@ -47,7 +47,7 @@ class Ball : public Entity
 public:
 	Ball(sf::Vector2f d, float s);
 
-	//Relatif aux positions de la brique
+	//Relatif aux positions de la balle
 	sf::Vector2f getPos();
 
 	void setPos(sf::Vector2f pos);
@@ -66,18 +66,27 @@ public:
 
 	void setSpeed(float s);
 
+	sf::Vector2f getStartPos();
+
 private:
 	sf::Vector2f ballPos;
 
 	sf::Vector2f dir;
 
 	float speed;
+
+	sf::Vector2f startPos;
 };
 
 class Cannon : public Entity
 {
 public:
-	Cannon();
+	Cannon(sf::Vector2f p);
+
+	//Relatif aux positions du canon
+	sf::Vector2f getPos();
+
+	void setPos(sf::Vector2f p);
 
 	sf::RectangleShape shape;
 
@@ -86,6 +95,8 @@ public:
 	void setAngle(float f);
 
 private:
+	sf::Vector2f pos;
+
 	float angle;
 
 	sf::Texture tex;
