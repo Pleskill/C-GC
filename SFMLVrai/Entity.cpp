@@ -9,6 +9,13 @@ Brick::Brick(float h, float w)
 {
     height = h;
     width = w;
+    shape.setSize(sf::Vector2f(w, h));
+    KC = false;
+}
+
+Brick::~Brick()
+{
+
 }
 
 sf::Vector2f Brick::getPos()
@@ -40,11 +47,22 @@ float Brick::getWidth()
     return width;
 }
 
+bool Brick::getKC()
+{
+    return KC;
+}
+
+void Brick::setKC(bool b)
+{
+    KC = b;
+}
+
 
 Ball::Ball(sf::Vector2f d, float s)
 {
     dir = d;
     speed = s;
+    shape.setRadius(20.f);
 }
 
 sf::Vector2f Ball::getPos()
@@ -73,7 +91,7 @@ sf::Vector2f Ball::isColliding()
 
 #pragma region Collisions écran
     //On check si la hauteur de la balle dépasse un des bords de la fenêtre
-    if (ballPos.y + shape.getLocalBounds().height / 2 > Util.getHeight())
+    if (shape.getPosition().y + shape.getLocalBounds().height / 2 > Util.getHeight())
     {
         std::cout << "check" << std::endl;
         speed = 0;
@@ -83,40 +101,40 @@ sf::Vector2f Ball::isColliding()
         Util.setBlocked(false);
         
         //On replace la balle en gardant la position en x
-        ballPos = sf::Vector2f(shape.getPosition().x, (Util.getHeight() - shape.getLocalBounds().height / 2));
+        shape.setPosition(sf::Vector2f(shape.getPosition().x, (Util.getHeight() - shape.getLocalBounds().height / 2)));
     }
-    else if (ballPos.y - shape.getLocalBounds().height / 2 < 0)
+    else if (shape.getPosition().y - shape.getLocalBounds().height / 2 < 0)
     {
         dir.y = -dir.y;
-        ballPos = sf::Vector2f(shape.getPosition().x, shape.getPosition().y + 5);
+        shape.setPosition(sf::Vector2f(shape.getPosition().x, shape.getPosition().y + 5));
     }
 
     //On check si la largeur de la balle dépasse la fenêtre
-    if (ballPos.x + shape.getLocalBounds().width / 2 > Util.getWidth())
+    if (shape.getPosition().x + shape.getLocalBounds().width / 2 > Util.getWidth())
     {
         dir.x = -dir.x;
-        ballPos = sf::Vector2f(shape.getPosition().x - 5, shape.getPosition().y);
+        shape.setPosition(sf::Vector2f(shape.getPosition().x - 5, shape.getPosition().y));
     }
-    else if (ballPos.x - shape.getLocalBounds().width / 2 < 0)
+    else if (shape.getPosition().x - shape.getLocalBounds().width / 2 < 0)
     {
         dir.x = -dir.x;
-        ballPos = sf::Vector2f(shape.getPosition().x + 5, shape.getPosition().y);
+        shape.setPosition(sf::Vector2f(shape.getPosition().x + 5, shape.getPosition().y));
     }
 #pragma endregion
 
     return dir;
 }
 
-sf::Vector2f Ball::isCollidingWith(sf::Shape* other) 
+sf::Vector2f Ball::isCollidingWith(Brick* other) 
 {
     float offset = 2.f;
 
-    if (shape.getGlobalBounds().intersects(other->getGlobalBounds()))
+    if (shape.getGlobalBounds().intersects(other->shape.getGlobalBounds()))
     {
-        float distDroite = abs((shape.getGlobalBounds().left + shape.getGlobalBounds().width) - other->getGlobalBounds().left);
-        float distGauche = abs(shape.getGlobalBounds().left - (other->getGlobalBounds().left + other->getGlobalBounds().width));
-        float distBas = abs((shape.getGlobalBounds().top + shape.getGlobalBounds().height) - other->getGlobalBounds().top);
-        float distHaut = abs(shape.getGlobalBounds().top - (other->getGlobalBounds().top + other->getGlobalBounds().height));
+        float distDroite = abs((shape.getGlobalBounds().left + shape.getGlobalBounds().width) - other->shape.getGlobalBounds().left);
+        float distGauche = abs(shape.getGlobalBounds().left - (other->shape.getGlobalBounds().left + other->shape.getGlobalBounds().width));
+        float distBas = abs((shape.getGlobalBounds().top + shape.getGlobalBounds().height) - other->shape.getGlobalBounds().top);
+        float distHaut = abs(shape.getGlobalBounds().top - (other->shape.getGlobalBounds().top + other->shape.getGlobalBounds().height));
 
         //Si la balle tape sur la gauche de l'objet
         if (distGauche < distDroite && distGauche < distHaut && distGauche < distBas)
@@ -139,7 +157,9 @@ sf::Vector2f Ball::isCollidingWith(sf::Shape* other)
         //Et dans le dernier cas, collision en bas
         else
             dir.y = -dir.y;
-        //shape->move(0, -offset);
+            //shape->move(0, -offset); 
+        
+        other->setKC(true);
     }
 
     //TODO delete la brique
@@ -165,4 +185,22 @@ float Ball::getSpeed()
 void Ball::setSpeed(float s)
 {
     speed = s;
+}
+
+Cannon::Cannon()
+{
+    angle = 0;
+    shape.setSize(sf::Vector2f(48, 60));
+    tex.loadFromFile("Ressource Files/cannon.png");
+    shape.setTexture(&tex);
+}
+
+float Cannon::getAngle()
+{
+    return angle;
+}
+
+void Cannon::setAngle(float f)
+{
+    angle = f;
 }

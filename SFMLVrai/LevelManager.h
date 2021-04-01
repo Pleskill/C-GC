@@ -11,6 +11,8 @@ public:
 
 	std::vector<std::string> getLevel();
 
+	void destroyAll();
+
 	std::list<Brick> bricksList;
 
 private:

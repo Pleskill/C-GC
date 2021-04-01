@@ -16,6 +16,8 @@ class Brick : public Entity
 public:
 	Brick(float h, float w);
 
+	~Brick();
+
 	//Relatif aux positions de la brique
 	sf::Vector2f getPos();
 
@@ -27,8 +29,14 @@ public:
 
 	float getWidth();
 
+	bool getKC();
+
+	void setKC(bool b);
+
 private:
 	sf::Vector2f brickPos;
+
+	bool KC;
 
 	float height;
 	float width;
@@ -48,7 +56,7 @@ public:
 
 	sf::Vector2f isColliding();
 
-	sf::Vector2f isCollidingWith(sf::Shape* other);
+	sf::Vector2f isCollidingWith(Brick* other);
 
 	sf::Vector2f getDir();
 
@@ -64,4 +72,21 @@ private:
 	sf::Vector2f dir;
 
 	float speed;
+};
+
+class Cannon : public Entity
+{
+public:
+	Cannon();
+
+	sf::RectangleShape shape;
+
+	float getAngle();
+
+	void setAngle(float f);
+
+private:
+	float angle;
+
+	sf::Texture tex;
 };

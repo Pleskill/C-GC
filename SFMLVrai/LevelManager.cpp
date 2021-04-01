@@ -1,5 +1,6 @@
 #include <iostream>
 #include "LevelManager.h"
+#include "Entity.h"
 #include <fstream>
 
 void LevelManager::readFile()
@@ -30,4 +31,16 @@ void LevelManager::readFile()
 std::vector<std::string> LevelManager::getLevel()
 {
     return level;
+}
+
+void LevelManager::destroyAll()
+{
+    for (std::list<Brick>::iterator it = bricksList.begin(); it != bricksList.end(); it++)
+    {
+        if ((*it).getKC())
+        {
+            delete &(*it);
+            break;
+        }
+    }
 }

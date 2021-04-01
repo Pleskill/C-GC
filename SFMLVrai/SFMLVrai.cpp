@@ -10,6 +10,7 @@ int main()
 #pragma region Variables
     Utilities Util;
     Ball Ball(sf::Vector2f(0, 0), 0);
+    Cannon Cannon();
     LevelManager LM;
 
     Util.setBlocked(false);
@@ -17,20 +18,23 @@ int main()
     for (int i = 0; i <= 4; i++)
     {
         //On les ajoute à la liste
-        LM.bricksList.push_back(Brick(50, 130));
+        Brick* b = new Brick(50, 130);
+        LM.bricksList.push_back(*b);
     }
 
-    sf::Vector2f startPosition(Util.getWidth() / 2, Util.getHeight() - Ball.shape.getLocalBounds().height /2);
+    sf::Vector2f startPosition(Util.getWidth() / 2, (Util.getHeight() - Ball.shape.getLocalBounds().height / 2));
 
     sf::Clock oClock;
 #pragma endregion
 
 #pragma region Start
+
+
     Util.windowSetup(); //On définit + récupère la fenêtre de jeu
 
-    Ball.shape.setFillColor(sf::Color::Red); //Balle en rouge
-
     Util.setShapeOrigine(&Ball.shape, 0.5, 0.5); //On set le point de pivot de la balle au milieu de l'axe X et Y
+
+    Ball.shape.setFillColor(sf::Color::Red); //Balle en rouge
 
     Ball.shape.setPosition(startPosition); //On place la balle en bas de l'écran, quelle que soit sa taille.
 
@@ -70,13 +74,13 @@ int main()
         //Si on clique
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !Util.getBlocked())
         {
-            Ball.setSpeed(500);
+            Ball.setSpeed(500.f);
 
             //On lit la position locale de la souris (relativement à une fenêtre)
             sf::Vector2i localPosition = sf::Mouse::getPosition(*Util.getWindow()); //window est un sf::Window et pas un sf::RenderWindow
 
             //On récupère le vecteur entre la position du centre de la balle et la souris et on le normalise (oui ça fait beaucoup)
-            Ball.setDir(Util.normalize(Util.getVectorBtw(Ball.getPos(), sf::Vector2f(localPosition))));
+            Ball.setDir(Util.normalize(Util.getVectorBtw(Ball.shape.getPosition(), sf::Vector2f(localPosition))));
             Util.setBlocked(true);
         }
 
@@ -85,10 +89,11 @@ int main()
 
         compteur = 0;
 
-        //En fonction du renvoi de la fonction, on change sa direction --> c'est pas opti mais comment régler ça?
+        //En fonction du renvoi de la fonction, on change sa direction. Ca cherche pour toutes les briques si la balle collide avec ou pas... a chaque frame
         for (std::list<Brick>::iterator it = LM.bricksList.begin(); it != LM.bricksList.end(); it++)
         {
-            Ball.setDir(Ball.isCollidingWith(&(*it).shape));
+            Ball.setDir(Ball.isCollidingWith(&(*it)));
+
             compteur++;
         }
 
@@ -96,7 +101,7 @@ int main()
         if (Ball.getSpeed() != 0)
         {
             //Pour bouger, on ajoute à la postition la direction, qu'on multiplie par la vitesse et le deltaTime.
-            Ball.setPos(Ball.getPos() + Ball.getDir() * Ball.getSpeed() * deltaTime);
+            Ball.shape.setPosition(Ball.shape.getPosition() + Ball.getDir() * Ball.getSpeed() * deltaTime);
         }
 
         Util.getWindow()->clear();
@@ -105,7 +110,15 @@ int main()
         //Dessin de chaque éléments de la liste de blocs
         for (std::list<Brick>::iterator it = LM.bricksList.begin(); it != LM.bricksList.end(); it++)
         {
-            Util.getWindow()->draw((*it).shape);
+            if (!(*it).getKC())
+            {
+                Util.getWindow()->draw((*it).shape);
+            }
+            else
+            {
+                LM.bricksList.erase(it);
+                break;
+            }
         }
 
         Util.getWindow()->display();
