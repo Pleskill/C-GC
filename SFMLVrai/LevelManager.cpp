@@ -1,32 +1,35 @@
 #include <iostream>
 #include "LevelManager.h"
 #include "Entity.h"
-#include <fstream>
+#include <fstream>.
+#include "ScoreManager.h"
 
-void LevelManager::readFile()
-{
-	std::ifstream inFile;
+ScoreManager scoremanager;
 
-    int i = 0;
-
-	inFile.open("D:\Documents\LevelBuilder.txt");
-
-    if (inFile.is_open()) 
-    {
-        std::string line;
-
-        //Stock le contenu des 5 premières lignes dans un vecteur
-        while (std::getline(inFile, line) && i < nbLignes) 
-        {
-            // using printf() in all tests for consistency
-            std::cout << line.c_str();
-
-            level.push_back(line);
-            i++;
-        }
-        inFile.close();
-    }
-}
+//void LevelManager::readFile()
+//{
+//	std::ifstream inFile;
+//
+//    int i = 0;
+//
+//	inFile.open("D:\Documents\LevelBuilder.txt");
+//
+//    if (inFile.is_open()) 
+//    {
+//        std::string line;
+//
+//        //Stock le contenu des 5 premières lignes dans un vecteur
+//        while (std::getline(inFile, line) && i < nbLignes) 
+//        {
+//            // using printf() in all tests for consistency
+//            std::cout << line.c_str();
+//
+//            level.push_back(line);
+//            i++;
+//        }
+//        inFile.close();
+//    }
+//}
 
 std::vector<std::string> LevelManager::getLevel()
 {
@@ -39,7 +42,8 @@ void LevelManager::destroyAll()
     {
         if ((*it).getKC())
         {
-            delete &(*it);
+            std::cout << std::to_string(scoremanager.score);
+            scoremanager.addScore(1);
             break;
         }
     }

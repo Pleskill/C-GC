@@ -4,6 +4,8 @@
 #include "Utilities.h";
 #include "Entity.h";
 #include "LevelManager.h"
+#include "ScoreManager.h"
+
 
 int main()
 {
@@ -12,8 +14,11 @@ int main()
     Ball Ball(sf::Vector2f(0, 0), 0);
     Cannon Cannon();
     LevelManager LM;
+    ScoreManager SM;
 
     Util.setBlocked(false);
+  
+
 
     for (int i = 0; i <= 4; i++)
     {
@@ -116,6 +121,8 @@ int main()
             }
             else
             {
+                SM.addScore(1);
+                std::cout << SM.score << std::endl;
                 LM.bricksList.erase(it);
                 break;
             }

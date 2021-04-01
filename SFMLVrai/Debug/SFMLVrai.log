@@ -1,15 +1,10 @@
-﻿  Entity.cpp
-  LevelManager.cpp
-D:\projVS\C-GC\SFMLVrai\LevelManager.cpp(12,14): warning C4129: 'D': unrecognized character escape sequence
-D:\projVS\C-GC\SFMLVrai\LevelManager.cpp(12,14): warning C4129: 'L': unrecognized character escape sequence
-  SFMLVrai.cpp
-D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(45,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+﻿  SFMLVrai.cpp
+C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(50,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(13,12): warning C4930: 'Cannon Cannon(void)': prototyped function not called (was a variable definition intended?)
-  Generating Code...
-  SFMLVrai.vcxproj -> D:\projVS\C-GC\Debug\SFMLVrai.exe
+C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(15,12): warning C4930: 'Cannon Cannon(void)': prototyped function not called (was a variable definition intended?)
+  SFMLVrai.vcxproj -> C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\Debug\SFMLVrai.exe
