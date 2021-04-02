@@ -53,13 +53,6 @@ int main()
         compteur++;
     }
 
-    /*LM.readFile();
-
-    for (int i = 0; i < LM.getLevel().size(); i++)
-    {
-        std::cout << LM.getLevel()[i] << std::endl;
-    }*/
-
 #pragma endregion
 
 #pragma region Update
@@ -70,8 +63,6 @@ int main()
         sf::Vector2f cannonForwardNorm = Util.normalize(cannonForward);
         sf::Vector2f souris = sf::Vector2f(sf::Mouse::getPosition(*Util.getWindow()));
         sf::Vector2f sourisNorm = Util.normalize(souris);
-
-        //std::cout << std::to_string(Cannon.shape.getPosition().x) << " " << std::to_string(Cannon.shape.getPosition().y) << std::endl;
 
         //On fait tourner le canon en fonction de la souris
         Cannon.setAngle(Util.calculAngle(cannonForward, souris)); //--> marche pas
@@ -85,8 +76,6 @@ int main()
             Cannon.shape.setRotation(Cannon.getAngle());
         }
         
-        //Cannon.shape.rotate(0.5f); //--> marche
-
         //Mise en place du deltaTime
         float deltaTime = oClock.getElapsedTime().asSeconds();
         oClock.restart();
@@ -156,14 +145,3 @@ int main()
 
     return 0;
 }
-
-// Iterator
-// for(std::list<list> iterrator it = l.begin(), it != l.end(), it++)
-
-//Et pour le while :
-//auto it = l.begin()
-// while(it != l.end)
-// {
-//      l.erase(it); --> renvoie le prochain itératteur
-// }
-// it++

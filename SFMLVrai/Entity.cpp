@@ -141,30 +141,23 @@ sf::Vector2f Ball::isCollidingWith(Brick* other)
         if (distGauche < distDroite && distGauche < distHaut && distGauche < distBas)
         {
             dir.x = -dir.x;
-            //this.move(offset, 0);
         }
         //Si elle tape sur la droite
         else if (distDroite < distGauche && distDroite < distHaut && distDroite < distBas)
         {
             dir.x = -dir.x;
-            //shape->move(-offset, 0);
         }
         //Si elle tape en haut
         else if (distHaut < distGauche && distHaut < distDroite && distHaut < distBas)
         {
             dir.y = -dir.y;
-            //shape->move(0, offset);
         }
         //Et dans le dernier cas, collision en bas
         else
             dir.y = -dir.y;
-            //shape->move(0, -offset); 
-        
+
         other->setKC(true);
     }
-
-    //TODO delete la brique
-
     return dir;
 }
 

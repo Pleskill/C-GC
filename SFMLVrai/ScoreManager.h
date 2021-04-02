@@ -5,7 +5,6 @@ class ScoreManager
 {
 public:
 	ScoreManager();
-	//int getScore();
 	void addScore(int newScore);
 	int score;
 

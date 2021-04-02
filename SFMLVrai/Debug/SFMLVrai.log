@@ -1,9 +1,16 @@
-﻿  SFMLVrai.cpp
-D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\projVS\C-GC\SFMLVrai\SFMLVrai.cpp(51,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+﻿  BallManager.cpp
+  LevelManager.cpp
+C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\LevelManager.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\LevelManager.cpp(15,14): warning C4129: 'D': unrecognized character escape sequence
+C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\LevelManager.cpp(15,14): warning C4129: 'L': unrecognized character escape sequence
+  SFMLVrai.cpp
+C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\SFMLVrai\SFMLVrai.cpp(51,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-  SFMLVrai.vcxproj -> D:\projVS\C-GC\Debug\SFMLVrai.exe
+  ScoreManager.cpp
+  Generating Code...
+  SFMLVrai.vcxproj -> C:\Users\etien\OneDrive\Bureau\c++labise\C-GC\Debug\SFMLVrai.exe

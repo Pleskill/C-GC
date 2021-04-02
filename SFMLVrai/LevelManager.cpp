@@ -21,7 +21,6 @@ void LevelManager::readFile()
         //Stock le contenu des 5 premières lignes dans un vecteur
         while (std::getline(inFile, line) && i < nbLignes) 
         {
-            // using printf() in all tests for consistency
             std::cout << line.c_str();
 
             level.push_back(line);

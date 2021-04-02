@@ -20,4 +20,3 @@ private:
 
 	int nbLignes = 5;
 };
-
